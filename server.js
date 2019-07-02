@@ -1,5 +1,5 @@
 "use strict";
-
+const  {testResult, getPathToTest}= require('./tests/test_function.js')
 const express = require("express");
 const cors = require("cors");
 
@@ -20,10 +20,11 @@ app.get("/", (req, res) => {
 });
 
 app.put("/eval", async (req, res) => {
+  console.log('req.body.func', req.body.func)
+  console.log('req.body.challengeId', req.body.challengeId)
   try {
-    const userFunc = await eval(req.body.func);
-
-    res.json(userFunc());
+    const result = await testResult(req.body.func, getPathToTest(req.body.challengeId))
+    res.json(result);
   } catch (error) {
     console.log("this is the error in the docker: ", error);
   }
