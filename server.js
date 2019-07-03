@@ -2,6 +2,7 @@
 
 const express = require("express");
 const cors = require("cors");
+const runTests = require('./tests')
 
 // Constants
 const PORT = 8080;
@@ -21,9 +22,11 @@ app.get("/", (req, res) => {
 
 app.put("/eval", async (req, res) => {
   try {
-    const userFunc = await eval(req.body.func);
-
-    res.json(userFunc());
+    console.log('req.body.challengeId', req.body.challengeId)
+    console.log('req.body.userInputStr', req.body.userInputStr)
+    let userResultObj = runTests(req.body.challengeId, req.body.userInputStr)
+    console.log('userResultObj', userResultObj)
+    res.json(userResultObj);
   } catch (error) {
     console.log("this is the error in the docker: ", error);
   }
