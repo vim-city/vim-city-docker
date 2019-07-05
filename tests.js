@@ -26,16 +26,16 @@ function challengeOne(userInput) {
     if (funcOutput === 'Pina Colada with ice and an umbrella') {
       resultObj.passed = true;
       resultObj.message =
-        'Congrats! Vim was able to place his order.  His order was: "Pina Colada with ice and an umbrella"';
+        'Congrats! Vim was able to place their order.  Their order was: "Pina Colada with ice and an umbrella"';
     } else {
       resultObj.passed = false;
-      resultObj.message = `Too bad! Vim tried order a Pina Colada with ice and an umbrella, but all he got was: ${funcOutput}`;
+      resultObj.message = `Too bad! Vim tried order a Pina Colada with ice and an umbrella, but all they got was: ${funcOutput}`;
     }
     return resultObj;
   } catch (error) {
     console.log('error in challengeOne func');
     resultObj.passed = false;
-    resultObj.message = `Too bad! Vim tried to place his order, but the bartender told him: \n ${
+    resultObj.message = `Too bad! Vim tried to place their order, but the bartender told them: \n ${
       error.message
     } `;
     return resultObj;
@@ -54,16 +54,16 @@ function challengeTwo(userInput) {
       'vim city\nyou are so pretty\ni am so happy.\nthat i can move right and up\nwith the l and k keys\nrespectively.'
     ) {
       resultObj.passed = true;
-      resultObj.message = `Congrats! You fixed Vin's spellchecker. Vin is so proud of his improved poem:\n ${funcOutput}`;
+      resultObj.message = `Congrats! You fixed Vin's spellchecker. Vin is so proud of their improved poem:\n ${funcOutput}`;
     } else {
       resultObj.passed = false;
-      resultObj.message = `Too bad! It looks like you made his poem worse:\n${funcOutput}`;
+      resultObj.message = `Too bad! It looks like you made their poem worse:\n${funcOutput}`;
     }
     return resultObj;
   } catch (error) {
     console.log('error in challengeTwo func');
     resultObj.passed = false;
-    resultObj.message = `Too bad! Vin put his poem in the spellchecker, but here's what he got back:\n ${
+    resultObj.message = `Too bad! Vin put their poem in the spellchecker, but here's what they got back:\n ${
       error.message
     } `;
     return resultObj;
@@ -88,13 +88,13 @@ function challengeThree(userInput) {
       resultObj.message = `Congrats! Vim's tweet went viral.  Tweet: \n ${funcOutput}`;
     } else {
       resultObj.passed = false;
-      resultObj.message = `Too bad! Vin picked the wrong song and now everyone thinks he has terrible taste in music. Tweet: ${funcOutput}`;
+      resultObj.message = `Too bad! Vin picked the wrong song and now everyone thinks they have terrible taste in music. Tweet: ${funcOutput}`;
     }
     return resultObj;
   } catch (error) {
     console.log('error in challengeOne func');
     resultObj.passed = false;
-    resultObj.message = `Too bad! Vin got this error message when he tried to post his tweet:\n ${
+    resultObj.message = `Too bad! Vin got this error message when they tried to post their tweet:\n ${
       error.message
     } `;
     return resultObj;
@@ -113,7 +113,7 @@ function challengeFour(userInput) {
       resultObj.message = `Congrats! Vim bought 50 ounces of carrot jello for $45.`;
     } else {
       resultObj.passed = false;
-      resultObj.message = `Too bad! Vin's calculator told him he should pay ${funcOutput} for 50 ounces of jello.`;
+      resultObj.message = `Too bad! Vin's calculator says they should pay ${funcOutput} for 50 ounces of jello.`;
     }
     return resultObj;
   } catch (error) {
