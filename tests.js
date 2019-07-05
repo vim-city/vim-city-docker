@@ -9,9 +9,9 @@ function runTests(challengeNum, userInput) {
       return challengeOne(userInput);
     case 2:
       return challengeTwo(userInput);
-    case '3':
+    case 3:
       return challengeThree(userInput);
-    case '4':
+    case 4:
       return challengeFour(userInput);
     default:
       return 'did not recognize case';
