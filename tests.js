@@ -1,41 +1,129 @@
-let indirectEval = eval
+let indirectEval = eval;
 
-function runTests(challengeNum, userInput){
-  console.log('challengeNum', challengeNum)
-  console.log('userInput', userInput)
-  switch (challengeNum){
+function runTests(challengeNum, userInput) {
+  console.log('challengeNum', challengeNum);
+  console.log('userInput', userInput);
+  switch (challengeNum) {
     case 1:
-      console.log('inside case 1', challengeOne(userInput))
-      return challengeOne(userInput)
-   default:
-     return 'did not recognize case'
+      console.log('inside case 1', challengeOne(userInput));
+      return challengeOne(userInput);
+    case 2:
+      return challengeTwo(userInput);
+    case '3':
+      return challengeThree(userInput);
+    case '4':
+      return challengeFour(userInput);
+    default:
+      return 'did not recognize case';
   }
 }
 
-
-function challengeOne(userInput){
-  let resultObj = {}
+function challengeOne(userInput) {
+  let resultObj = {};
   try {
-  let userResult = indirectEval('(' + userInput + ')')
-  let funcOutput = userResult('Pina Colada')
-  if (funcOutput === 'Pina Colada with ice and an umbrella'){
-    resultObj.passed = true
-    resultObj.message = 'Congrats! You fixed the bad code'
+    let userResult = indirectEval('(' + userInput + ')');
+    let funcOutput = userResult('Pina Colada');
+    if (funcOutput === 'Pina Colada with ice and an umbrella') {
+      resultObj.passed = true;
+      resultObj.message =
+        'Congrats! Vim was able to place his order.  His order was: "Pina Colada with ice and an umbrella"';
+    } else {
+      resultObj.passed = false;
+      resultObj.message = `Too bad! Vim tried order a Pina Colada with ice and an umbrella, but all he got was: ${funcOutput}`;
+    }
+    return resultObj;
+  } catch (error) {
+    console.log('error in challengeOne func');
+    resultObj.passed = false;
+    resultObj.message = `Too bad! Vim tried to place his order, but the bartender told him: \n ${
+      error.message
+    } `;
+    return resultObj;
   }
- else {
-    resultObj.passed = false
-    resultObj.message = `AssertionError: expected ${funcOutput} to equal 'Pina Colada with ice and an umbrella'`
+}
+
+function challengeTwo(userInput) {
+  let resultObj = {};
+  try {
+    let userResult = indirectEval('(' + userInput + ')');
+    let funcOutput = userResult(
+      'vym cyti\niou are so pretti\ny am so happi.\nthat y can move ryght and up\nwyth the l and k keis\nrespectyveli.'
+    );
+    if (
+      funcOutput ===
+      'vim city\nyou are so pretty\ni am so happy.\nthat i can move right and up\nwith the l and k keys\nrespectively.'
+    ) {
+      resultObj.passed = true;
+      resultObj.message = `Congrats! You fixed Vin's spellchecker. Vin is so proud of his improved poem:\n ${funcOutput}`;
+    } else {
+      resultObj.passed = false;
+      resultObj.message = `Too bad! It looks like you made his poem worse:\n${funcOutput}`;
+    }
+    return resultObj;
+  } catch (error) {
+    console.log('error in challengeTwo func');
+    resultObj.passed = false;
+    resultObj.message = `Too bad! Vin put his poem in the spellchecker, but here's what he got back:\n ${
+      error.message
+    } `;
+    return resultObj;
   }
-
-  console.log('challengeOne has been called')
- return resultObj
-}
-catch (error){
-  console.log('error in challengeOne func')
-  resultObj.passed = false
-  resultObj.message = error.message
-  return resultObj
-}
 }
 
-module.exports = runTests
+function challengeThree(userInput) {
+  let resultObj = {};
+  try {
+    let userResult = indirectEval('(' + userInput + ')');
+    let funcOutput = userResult([
+      'Hackers Of The World Unite',
+      'Hungry for Hacking',
+      'Hack Into My Heart',
+      'The Hunters And The Hackers',
+    ]);
+    if (
+      funcOutput ===
+      'siiiicckk performance by @HannahAndTheHacks in #vimcity. Hack Into My Heart = my anthem'
+    ) {
+      resultObj.passed = true;
+      resultObj.message = `Congrats! Vim's tweet went viral.  Tweet: \n ${funcOutput}`;
+    } else {
+      resultObj.passed = false;
+      resultObj.message = `Too bad! Vin picked the wrong song and now everyone thinks he has terrible taste in music. Tweet: ${funcOutput}`;
+    }
+    return resultObj;
+  } catch (error) {
+    console.log('error in challengeOne func');
+    resultObj.passed = false;
+    resultObj.message = `Too bad! Vin got this error message when he tried to post his tweet:\n ${
+      error.message
+    } `;
+    return resultObj;
+  }
+}
+
+function challengeFour(userInput) {
+  let resultObj = {};
+  try {
+    let userResult = indirectEval('(' + userInput + ')');
+    console.log('typeof user result', typeof userResult);
+    let funcOutput = userResult(50);
+    console.log('funcOUtput,', funcOutput);
+    if (funcOutput === 45) {
+      resultObj.passed = true;
+      resultObj.message = `Congrats! Vim bought 50 ounces of carrot jello for $45.`;
+    } else {
+      resultObj.passed = false;
+      resultObj.message = `Too bad! Vin's calculator told him he should pay ${funcOutput} for 50 ounces of jello.`;
+    }
+    return resultObj;
+  } catch (error) {
+    console.log('error in challengeOne func');
+    resultObj.passed = false;
+    resultObj.message = `Too bad! The cash register returned this error:\n ${
+      error.message
+    } `;
+    return resultObj;
+  }
+}
+
+module.exports = runTests;
