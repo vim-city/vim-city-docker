@@ -1,5 +1,4 @@
 let indirectEval = eval;
-let evalPromise = new Promise();
 
 function runTests(challengeNum, userInput) {
   console.log('challengeNum', challengeNum);
