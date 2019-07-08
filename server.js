@@ -3,6 +3,7 @@
 const express = require("express");
 const cors = require("cors");
 const runTests = require('./tests')
+const keywordCheck = require('./keywordCheck')
 
 // Constants
 const PORT = 8080;
@@ -13,14 +14,12 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// app.use(cors());
+
+
 app.options("/eval", cors());
 
 
-// const corsOptions = {
-//   origin: 'https://vim-city.herokuapp.com',
-//   optionsSuccessStatus: 200
-// }
+
 
 const whitelist = ['https://vim-city.herokuapp.com']
 const corsOptions = {
@@ -40,11 +39,12 @@ app.get("/", cors(corsOptions),  (req, res) => {
 
 app.put("/eval", cors(corsOptions), async (req, res) => {
   try {
-    console.log('req.body.challengeId', req.body.challengeId)
-    console.log('req.body.userInputStr', req.body.userInputStr)
-    let userResultObj = runTests(req.body.challengeId, req.body.userInputStr)
-    console.log('userResultObj', userResultObj)
-    res.json(userResultObj);
+    if (keywordCheck(req.body.userInputStr)) {
+      let userResultObj = runTests(req.body.challengeId, req.body.userInputStr)
+      res.json(userResultObj);
+    } else {
+      res.json('Try resetting the problem and follow the directions. Thanks.')
+    }
   } catch (error) {
     console.log("this is the error in the docker: ", error);
   }
