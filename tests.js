@@ -5,7 +5,6 @@ function runTests(challengeNum, userInput) {
   console.log('userInput', userInput);
   switch (challengeNum) {
     case 1:
-      console.log('inside case 1', challengeOne(userInput));
       return challengeOne(userInput);
     case 2:
       return challengeTwo(userInput);
@@ -21,6 +20,11 @@ function runTests(challengeNum, userInput) {
 function challengeOne(userInput) {
   let resultObj = {};
   try {
+    if (userInput.length > 125) {
+      throw new Error(
+        'Sorry, but your answer was much longer than the solution.'
+      );
+    }
     let userResult = indirectEval('(' + userInput + ')');
     let funcOutput = userResult('Pina Colada');
     if (funcOutput === 'Pina Colada with ice and an umbrella') {
@@ -45,6 +49,11 @@ function challengeOne(userInput) {
 function challengeTwo(userInput) {
   let resultObj = {};
   try {
+    if (userInput.length > 374) {
+      throw new Error(
+        'Sorry, but your answer was much longer than the solution.'
+      );
+    }
     let userResult = indirectEval('(' + userInput + ')');
     let funcOutput = userResult(
       'vym cyti\niou are so pretti\ny am so happi.\nthat y can move ryght and up\nwyth the l and k keis\nrespectyveli.'
@@ -73,6 +82,11 @@ function challengeTwo(userInput) {
 function challengeThree(userInput) {
   let resultObj = {};
   try {
+    if (userInput.length > 235) {
+      throw new Error(
+        'Sorry, but your answer was much longer than the solution.'
+      );
+    }
     let userResult = indirectEval('(' + userInput + ')');
     let funcOutput = userResult([
       'Hackers Of The World Unite',
@@ -104,6 +118,11 @@ function challengeThree(userInput) {
 function challengeFour(userInput) {
   let resultObj = {};
   try {
+    if (userInput.length > 164) {
+      throw new Error(
+        'Sorry, but your answer was much longer than the solution.'
+      );
+    }
     let userResult = indirectEval('(' + userInput + ')');
     console.log('typeof user result', typeof userResult);
     let funcOutput = userResult(50);
