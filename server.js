@@ -2,7 +2,6 @@
 
 const express = require('express');
 const cors = require('cors');
-const runTests = require('./tests');
 const testTimeout = require('./spawn.js');
 const readFileSync = require('fs').readFileSync;
 const keywordCheck = require('./keywordCheck');
@@ -42,8 +41,6 @@ app.get('/', cors(corsOptions), (req, res) => {
 app.put('/eval', cors(corsOptions), async (req, res) => {
   try {
     let userResultObj = {};
-    console.log('req.body.challengeId', req.body.challengeId);
-    console.log('req.body.userInputStr', req.body.userInputStr);
     if (
       !lengthCheck(req.body.challengeId, req.body.userInputStr) ||
       !keywordCheck(req.body.userInputStr)
@@ -61,16 +58,6 @@ app.put('/eval', cors(corsOptions), async (req, res) => {
     console.log('this is the error in the docker: ', error);
   }
 });
-// async function test() {
-//   await testTimeout('1', "function test(){ while(true) {console.log('hello')}}");
-//   console.log('reading result');
-//   let result = readFileSync('result.js');
-//   console.log(
-//     'this is resultObj from server.js',
-//     Buffer.from(result).toString('utf8')
-//   );
-// }
-// test();
 
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
