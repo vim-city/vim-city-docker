@@ -1,22 +1,22 @@
 let indirectEval = eval;
+let writeFileSync = require('fs').writeFileSync;
 
-function runTests(userInput, challengeNum) {
-  console.log('challengeNum', challengeNum);
-  console.log('userInput', userInput);
-  let challengeStr = +challengeNum
-  switch (challengeStr) {
+function runTests(challengeId, userInput) {
+  challengeNum = +challengeId;
+  switch (challengeNum) {
     case 1:
-      console.log(challengeOne(userInput))
-      return challengeOne(userInput);
+      console.log('case 1');
+      writeFileSync('./result.js', JSON.stringify(challengeOne(userInput)));
+      break;
     case 2:
-      console.log(challengeTwo(userInput))
-      return challengeTwo(userInput);
+      writeFileSync('./result.js', JSON.stringify(challengeTwo(userInput)));
+      break;
     case 3:
-      console.log(challengeThree(userInput))
-      return challengeThree(userInput);
+      writeFileSync('./result.js', JSON.stringify(challengeThree(userInput)));
+      break;
     case 4:
-      console.log(challengeFour(userInput))
-      return challengeFour(userInput);
+      writeFileSync('./result.js', JSON.stringify(challengeFour(userInput)));
+      break;
     default:
       return 'did not recognize case';
   }
@@ -25,11 +25,6 @@ function runTests(userInput, challengeNum) {
 function challengeOne(userInput) {
   let resultObj = {};
   try {
-    if (userInput.length > 125) {
-      throw new Error(
-        'Sorry, but your answer was much longer than the solution.'
-      );
-    }
     let userResult = indirectEval('(' + userInput + ')');
     let funcOutput = userResult('Pina Colada');
     if (funcOutput === 'Pina Colada with ice and an umbrella') {
@@ -47,7 +42,6 @@ function challengeOne(userInput) {
     resultObj.message = `Too bad! Vim tried to place their order, but the bartender told them: \n ${
       error.message
     } `;
-
     return resultObj;
   }
 }
@@ -55,11 +49,6 @@ function challengeOne(userInput) {
 function challengeTwo(userInput) {
   let resultObj = {};
   try {
-    if (userInput.length > 374) {
-      throw new Error(
-        'Sorry, but your answer was much longer than the solution.'
-      );
-    }
     let userResult = indirectEval('(' + userInput + ')');
     let funcOutput = userResult(
       'vym cyti\niou are so pretti\ny am so happi.\nthat y can move ryght and up\nwyth the l and k keis\nrespectyveli.'
@@ -81,7 +70,6 @@ function challengeTwo(userInput) {
     resultObj.message = `Too bad! Vin put their poem in the spellchecker, but here's what they got back:\n ${
       error.message
     } `;
-
     return resultObj;
   }
 }
@@ -89,11 +77,6 @@ function challengeTwo(userInput) {
 function challengeThree(userInput) {
   let resultObj = {};
   try {
-    if (userInput.length > 235) {
-      throw new Error(
-        'Sorry, but your answer was much longer than the solution.'
-      );
-    }
     let userResult = indirectEval('(' + userInput + ')');
     let funcOutput = userResult([
       'Hackers Of The World Unite',
@@ -125,11 +108,6 @@ function challengeThree(userInput) {
 function challengeFour(userInput) {
   let resultObj = {};
   try {
-    if (userInput.length > 164) {
-      throw new Error(
-        'Sorry, but your answer was much longer than the solution.'
-      );
-    }
     let userResult = indirectEval('(' + userInput + ')');
     console.log('typeof user result', typeof userResult);
     let funcOutput = userResult(50);
@@ -152,6 +130,6 @@ function challengeFour(userInput) {
   }
 }
 
-runTests(process.argv[2], process.argv[3])
+runTests(process.argv[3], process.argv[2]);
 
 module.exports = runTests;

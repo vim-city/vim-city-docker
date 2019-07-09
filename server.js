@@ -1,71 +1,71 @@
-"use strict";
+'use strict';
 
-const express = require("express");
-const cors = require("cors");
-const runTests = require('./tests')
-
-const testTimeout = require('./spawn')
-
-const keywordCheck = require('./keywordCheck')
-
+const express = require('express');
+const cors = require('cors');
+const runTests = require('./tests');
+const testTimeout = require('./spawn.js');
+const readFileSync = require('fs').readFileSync;
+const keywordCheck = require('./keywordCheck');
+const lengthCheck = require('./lengthCheck');
 
 // Constants
 const PORT = 8080;
-const HOST = "0.0.0.0";
+const HOST = '0.0.0.0';
 
 // App
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.options('/eval', cors());
 
-
-app.options("/eval", cors());
-
-
-
-
-const whitelist = ['https://vim-city.herokuapp.com']
+const whitelist = ['https://vim-city.herokuapp.com'];
 const corsOptions = {
- origin: function (origin, callback) {
-   if (whitelist.indexOf(origin) !== -1) {
-     callback(null, true)
-   } else {
-     callback(new Error('Not allowed by CORS'))
-   }
- }
-}
+  origin: function(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
 
-
-app.get("/", cors(corsOptions),  (req, res) => {
-  res.send("Hello world\n");
+app.get('/', cors(corsOptions), (req, res) => {
+  res.send('Hello world\n');
 });
 
-app.put("/eval", cors(corsOptions), async (req, res) => {
+app.put('/eval', cors(corsOptions), async (req, res) => {
   try {
-
-    console.log('req.body.challengeId', req.body.challengeId)
-    console.log('req.body.userInputStr', req.body.userInputStr)
-    let userResultObj = await testTimeout(req.body.challengeId, req.body.userInputStr)
-    console.log('userResultObj', userResultObj)
-    res.json(userResultObj);
-
-    if (keywordCheck(req.body.userInputStr)) {
-      let userResultObj = runTests(req.body.challengeId, req.body.userInputStr)
-      res.json(userResultObj);
+    let userResultObj = {};
+    console.log('req.body.challengeId', req.body.challengeId);
+    console.log('req.body.userInputStr', req.body.userInputStr);
+    if (
+      !lengthCheck(req.body.challengeId, req.body.userInputStr) ||
+      !keywordCheck(req.body.userInputStr)
+    ) {
+      userResultObj.message =
+        'Try resetting the problem and follow the directions. Thanks.';
+      userResultObj.passed = false;
     } else {
-      res.json('Try resetting the problem and follow the directions. Thanks.')
+      await testTimeout(req.body.challengeId, req.body.userInputStr);
+      let bufferResult = readFileSync('result.js');
+      userResultObj = Buffer.from(result, 'hex').toString('utf8');
+      res.json(userResultObj);
     }
-
   } catch (error) {
-    console.log("this is the error in the docker: ", error);
+    console.log('this is the error in the docker: ', error);
   }
 });
-async function test(){
-  let resultObj = await testTimeout('1', "function test(){ console.log('hello')}")
-  console.log('this is resultObj from server.js', resultObj)
-}
-test()
+// async function test() {
+//   await testTimeout('1', "function test(){ console.log('hello')}");
+//   console.log('reading result');
+//   let result = readFileSync('result.js');
+//   console.log(
+//     'this is resultObj from server.js',
+//     Buffer.from(result).toString('utf8')
+//   );
+// }
+// test();
 
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
