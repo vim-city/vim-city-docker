@@ -2,7 +2,7 @@ let indirectEval = eval;
 let writeFileSync = require('fs').writeFileSync;
 
 function runTests(challengeId, userInput) {
-  challengeNum = +challengeId;
+  let challengeNum = +challengeId;
   switch (challengeNum) {
     case 1:
       console.log('case 1');
