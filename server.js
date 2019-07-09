@@ -52,14 +52,14 @@ app.put('/eval', async (req, res) => {
       await testTimeout(req.body.challengeId, req.body.userInputStr);
       let bufferResult = readFileSync('result.js');
       userResultObj = Buffer.from(bufferResult, 'hex').toString('utf8');
-      res.json(userResultObj);
     }
+    res.json(userResultObj);
   } catch (error) {
     console.log('this is the error in the docker: ', error);
   }
 });
 // async function test() {
-//   await testTimeout('1', "function test(){ console.log('hello')}");
+//   await testTimeout('1', "function test(){ while(true) {console.log('hello')}}");
 //   console.log('reading result');
 //   let result = readFileSync('result.js');
 //   console.log(

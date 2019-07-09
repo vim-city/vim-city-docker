@@ -1,4 +1,5 @@
 const spawn = require('child_process').spawn;
+let writeFileSync = require('fs').writeFileSync;
 
 const testTimeout = function(challengeNum, userInputStr) {
   let completed = false;
@@ -9,16 +10,15 @@ const testTimeout = function(challengeNum, userInputStr) {
     `${challengeNum}`,
   ]);
 
-  let timeOut;
-
   let timeOutPromise = new Promise(resolve => {
-    timeOut = setTimeout(function() {
+    let timeOut = setTimeout(function() {
       console.log('sending signal');
       if (!completed) {
         let resultObj = {
           passed: false,
           message: 'Maximum call stack exceeded',
         };
+        writeFileSync('./result.js', JSON.stringify(resultObj));
         console.log('not completed');
         child.kill();
 
