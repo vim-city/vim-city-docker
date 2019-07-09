@@ -39,8 +39,6 @@ app.get('/', (req, res) => {
 app.put('/eval', async (req, res) => {
   try {
     let userResultObj = {};
-    console.log('req.body.challengeId', req.body.challengeId);
-    console.log('req.body.userInputStr', req.body.userInputStr);
     if (
       !lengthCheck(req.body.challengeId, req.body.userInputStr) ||
       !keywordCheck(req.body.userInputStr)

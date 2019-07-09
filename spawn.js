@@ -12,14 +12,12 @@ const testTimeout = function(challengeNum, userInputStr) {
 
   let timeOutPromise = new Promise(resolve => {
     let timeOut = setTimeout(function() {
-      console.log('sending signal');
       if (!completed) {
         let resultObj = {
           passed: false,
           message: 'Maximum call stack exceeded',
         };
         writeFileSync('./result.js', JSON.stringify(resultObj));
-        console.log('not completed');
         child.kill();
 
         resolve(resultObj);
@@ -30,7 +28,6 @@ const testTimeout = function(challengeNum, userInputStr) {
   let exitPromise = new Promise(resolve => {
     child.on('exit', function() {
       completed = true;
-      console.log('Child exited!');
       resolve(true);
     });
   });
