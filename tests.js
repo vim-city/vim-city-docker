@@ -1,16 +1,21 @@
 let indirectEval = eval;
 
-function runTests(challengeNum, userInput) {
+function runTests(userInput, challengeNum) {
   console.log('challengeNum', challengeNum);
   console.log('userInput', userInput);
-  switch (challengeNum) {
+  let challengeStr = +challengeNum
+  switch (challengeStr) {
     case 1:
+      console.log(challengeOne(userInput))
       return challengeOne(userInput);
     case 2:
+      console.log(challengeTwo(userInput))
       return challengeTwo(userInput);
     case 3:
+      console.log(challengeThree(userInput))
       return challengeThree(userInput);
     case 4:
+      console.log(challengeFour(userInput))
       return challengeFour(userInput);
     default:
       return 'did not recognize case';
@@ -42,6 +47,7 @@ function challengeOne(userInput) {
     resultObj.message = `Too bad! Vim tried to place their order, but the bartender told them: \n ${
       error.message
     } `;
+
     return resultObj;
   }
 }
@@ -75,6 +81,7 @@ function challengeTwo(userInput) {
     resultObj.message = `Too bad! Vin put their poem in the spellchecker, but here's what they got back:\n ${
       error.message
     } `;
+
     return resultObj;
   }
 }
@@ -144,5 +151,7 @@ function challengeFour(userInput) {
     return resultObj;
   }
 }
+
+runTests(process.argv[2], process.argv[3])
 
 module.exports = runTests;
