@@ -17,7 +17,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(cors());
 app.options('/eval', cors());
+app.options('/', cors());
 
 const whitelist = ['https://vim-city.herokuapp.com'];
 const corsOptions = {
@@ -30,11 +32,11 @@ const corsOptions = {
   },
 };
 
-app.get('/', cors(corsOptions), (req, res) => {
+app.get('/', (req, res) => {
   res.send('Hello world\n');
 });
 
-app.put('/eval', cors(corsOptions), async (req, res) => {
+app.put('/eval', async (req, res) => {
   try {
     let userResultObj = {};
     console.log('req.body.challengeId', req.body.challengeId);
@@ -49,7 +51,7 @@ app.put('/eval', cors(corsOptions), async (req, res) => {
     } else {
       await testTimeout(req.body.challengeId, req.body.userInputStr);
       let bufferResult = readFileSync('result.js');
-      userResultObj = Buffer.from(result, 'hex').toString('utf8');
+      userResultObj = Buffer.from(bufferResult, 'hex').toString('utf8');
       res.json(userResultObj);
     }
   } catch (error) {
