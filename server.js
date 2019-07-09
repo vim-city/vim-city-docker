@@ -32,11 +32,11 @@ const corsOptions = {
   },
 };
 
-app.get('/', (req, res) => {
+app.get('/', cors(corsOptions), (req, res) => {
   res.send('Hello world\n');
 });
 
-app.put('/eval', async (req, res) => {
+app.put('/eval', cors(corsOptions), async (req, res) => {
   try {
     let userResultObj = {};
     console.log('req.body.challengeId', req.body.challengeId);
