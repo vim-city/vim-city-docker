@@ -23,6 +23,7 @@ app.options('/', cors());
 const whitelist = [
   'https://vim-city.herokuapp.com',
   'http://vim-city.herokuapp.com',
+  'http:localhost'
 ];
 const corsOptions = {
   origin: function(origin, callback) {
@@ -34,8 +35,12 @@ const corsOptions = {
   },
 };
 
-app.get('/', cors(corsOptions), (req, res) => {
+app.get('/', (req, res) => {
   res.send('Hello world\n');
+});
+
+app.get('/health', (req, res) => {
+  res.send({ok: true});
 });
 
 app.put('/eval', cors(corsOptions), async (req, res) => {
