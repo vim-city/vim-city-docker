@@ -8,7 +8,7 @@ const keywordCheck = require('./keywordCheck');
 const lengthCheck = require('./lengthCheck');
 
 // Constants
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 const HOST = '0.0.0.0';
 
 // App
@@ -20,20 +20,6 @@ app.use(express.urlencoded({ extended: true }));
 app.options('/eval', cors());
 app.options('/', cors());
 
-const whitelist = [
-  'https://vim-city.herokuapp.com',
-  'http://vim-city.herokuapp.com',
-  'http:localhost'
-];
-const corsOptions = {
-  origin: function(origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-};
 
 app.get('/', (req, res) => {
   res.send('Hello world\n');
@@ -43,7 +29,7 @@ app.get('/health', (req, res) => {
   res.send({ok: true});
 });
 
-app.put('/eval', cors(corsOptions), async (req, res) => {
+app.put('/eval', async (req, res) => {
   try {
     let userResultObj = {};
     if (
@@ -64,5 +50,4 @@ app.put('/eval', cors(corsOptions), async (req, res) => {
   }
 });
 
-app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+app.listen(PORT, () => console.log(`Running up on port ***${PORT}`) );
